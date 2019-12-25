@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: Podcasts API for learning basics of Raml # Starting an API by defining the RAML version being used to document the API spec.
+baseUri: https://api.podcasts.com/{version} # Furthermore define basic API characterstics like title, baseUri etc.
+version: v1 # API version can be defined here. Can be changed as the API spec changes through its lifecycle
+mediaType: application/json # Define the data exchange format supported by your API
+
+# Create and pull namespaced, reusable libraries containing data types, traits, resourceTypes and more!
+uses: # Referencing Podcast Object - Reusability
+  Podcasts: libraries/podcasts.raml
+  
+# Traits and resource Types can be used for code reuse and design patterns
+traits: # Defining traits that can be applied to resources 
+  paged: !include traits/paged.raml
+  rateLimited: !include traits/rate-limited.raml
+
+# Annotations can be used to add user specific functionality without compromising your API spec
+annotationTypes: # Using Annotation types for defining genre of the podcast. Data about Metadata!
+  monitoringInterval:
+    type: integer
+  
+securitySchemes: # Defining security schemes which can be used by our resources
+  oauth-2.0: !include securitySchemes/oAuth-2.0.raml
+  oauth-1.0: !include securitySchemes/oAuth-1.0.raml
+
+# Describe your methods with human readable descriptions, including responses and other properties for a resource
+/podcasts:
+  is: [paged, rateLimited] # Using traits in our resource. Defines resource supports paging and is rate limited.
+  securedBy: [oauth-2.0,oauth-1.0] # Using security schemes to secure our resource
+  get:
+    (monitoringInterval): 30 # Using annotation type to define monitoring interval
+    queryParameters:
+     genre:
+      description: Filter podcasts by genre
+      type: string
+      required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: Podcasts.Podcast[] # Using Podcast object as an output defined under podcasts raml
+      400:
+        body:
+         application/json:
+          example: !include examples/podcasts-error-output.json
+          schema: !include schemas/podcasts-error-output.json

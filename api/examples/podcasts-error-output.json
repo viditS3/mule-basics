@@ -1,0 +1,6 @@
+{
+		"httpStatus": "404",
+		"errorCode": "E_01_PODCAST_ERROR",
+		"timestamp": "2018-06-12T10:47:07+0530",
+		"errorMessage": "Podcasts genre not found"
+}

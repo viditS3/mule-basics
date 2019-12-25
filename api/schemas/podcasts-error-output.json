@@ -1,0 +1,44 @@
+{
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "httpStatus": {
+          "$id": "httpStatus",
+          "type": "string",
+          "title": "The HttpStatus Schema",
+		  "description": "This field specifies the Http Code for error.",
+          "examples": [
+            "404"
+          ]
+        },
+        "errorCode": {
+          "$id": "errorCode",
+          "type": "string",
+          "title": "The ErrorCode Schema",
+          "description": "This field specifies the pre defined Error Code for Mule Error.",
+          "examples": [
+            "E_01_PODCAST_ERROR"
+          ]
+        },
+        "timestamp": {
+          "$id": "timestamp",
+          "type": "string",
+          "title": "The TimeStamp Schema",
+          "description": "This field specifies the timeStamp when the error occurred.",
+          "examples": [
+            "2018-06-12T10:47:07+0530"
+          ]
+        },
+        "errorMessage": {
+          "$id": "errorMessage",
+          "type": "string",
+          "title": "The Errormessage Schema",
+          "description": "This field gives the description of the error occurred.",
+          "examples": [
+            "Podcasts genre not found"
+          ]
+        }
+  }
+}
